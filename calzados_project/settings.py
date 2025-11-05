@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     # Apps locales
     'rest_framework',
     'corsheaders',
-    'productos',  # <- tu app principal
+    'calzados_api',  # <- tu app principal
 ]
 
 # ----------------- MIDDLEWARE -----------------
