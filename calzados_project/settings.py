@@ -110,11 +110,12 @@ if os.environ.get('RENDER'):
     DEBUG = False
 
     ALLOWED_HOSTS = [
-        'calzados-zavaleta.onrender.com',  # tu dominio de Render
+        'calzados-zavaleta.onrender.com',
         'localhost',
         '127.0.0.1',
     ]
 
+    # Configuración MySQL Aiven con SSL
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -124,14 +125,13 @@ if os.environ.get('RENDER'):
             'HOST': os.environ.get('DB_HOST', ''),
             'PORT': os.environ.get('DB_PORT', '3306'),
             'OPTIONS': {
-                'ssl': {'ca': '/etc/ssl/certs/ca-certificates.crt'}
+                'ssl': {'ssl-mode': 'REQUIRED'}  # ← CAMBIO IMPORTANTE
             }
         }
     }
 
-    # Archivos estáticos comprimidos
+    # Archivos estáticos
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
     # Middleware WhiteNoise (para Render)
     MIDDLEWARE = list(MIDDLEWARE)
     if 'whitenoise.middleware.WhiteNoiseMiddleware' not in MIDDLEWARE:
