@@ -2,13 +2,14 @@
 # Exit on error
 set -o errexit
 
-echo "Instalando dependencias..."
+echo "=== Instalando dependencias con pip ==="
+pip install --upgrade pip
 pip install -r requirements.txt
 
-echo "Recolectando archivos estáticos..."
+echo "=== Colectando archivos estáticos ==="
 python manage.py collectstatic --no-input
 
-echo "Aplicando migraciones..."
+echo "=== Aplicando migraciones ==="
 python manage.py migrate
 
-chmod +x backend/build.sh
+echo "=== Build completado ==="
