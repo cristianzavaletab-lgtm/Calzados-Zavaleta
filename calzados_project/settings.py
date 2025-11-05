@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from datetime import timedelta
-import dj_database_url
+
 
 # ----------------- RUTAS BASE -----------------
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -105,7 +105,7 @@ REST_FRAMEWORK = {
 # ----------------- CORS -----------------
 CORS_ALLOW_ALL_ORIGINS = True
 
-# ----------------- CONFIGURACIÓN PARA PRODUCCIÓN (Render + Aiven) -----------------
+# ----------------- CONFIGURACIÓN PARA PRODUCCIÓN (Render) -----------------
 if os.environ.get('RENDER'):
     DEBUG = False
 
@@ -115,18 +115,11 @@ if os.environ.get('RENDER'):
         '127.0.0.1',
     ]
 
-    # Configuración MySQL Aiven con SSL
+    # SQLite para producción - FUNCIONA INMEDIATAMENTE
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ.get('DB_NAME', 'defaultdb'),
-            'USER': os.environ.get('DB_USER', 'avnadmin'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-            'HOST': os.environ.get('DB_HOST', ''),
-            'PORT': os.environ.get('DB_PORT', '3306'),
-            'OPTIONS': {
-                'ssl': {'ssl-mode': 'REQUIRED'}  # ← CAMBIO IMPORTANTE
-            }
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
 
